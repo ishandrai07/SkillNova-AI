@@ -38,11 +38,40 @@ const interviewReportSchema = z.object({
 
 async function generateInterviewReport({resume, selfDescription, jobDescription}){
 
-    const prompt = `Generate an interview report for a candidate with the following details:
-    - Resume: ${resume}
-    - Self-Description: ${selfDescription}
-    - Job Description: ${jobDescription}
-    `;
+    const prompt = `
+You are an expert technical interviewer and hiring manager.
+
+Analyze the candidate's resume, self-description, and job description.
+
+Return a JSON object that STRICTLY follows the provided schema.
+
+IMPORTANT:
+- Do NOT leave any array empty.
+- Generate at least:
+  - 8 technicalQuestions
+  - 5 behavioralQuestions
+  - 5 skillGaps
+  - 7 preparationPlan days
+- matchScore must be an integer between 0 and 100.
+- Every question must include:
+  - question
+  - intention
+  - answer
+- Every preparation day must include:
+  - day
+  - focus
+  - tasks (minimum 3 tasks)
+- Base your analysis on the resume and job description.
+
+Resume:
+${resume}
+
+Self Description:
+${selfDescription}
+
+Job Description:
+${jobDescription}
+`;
 
     const response = await ai.models.generateContent({
         model: "gemini-3.6-flash",
