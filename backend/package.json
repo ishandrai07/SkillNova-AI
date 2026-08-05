@@ -31,6 +31,7 @@
     "mongoose": "^9.8.0",
     "multer": "^2.2.0",
     "pdf-parse": "^2.4.5",
+    "puppeteer": "^25.5.0",
     "zod": "^4.4.3",
     "zod-to-json-schema": "^3.25.2"
   }
