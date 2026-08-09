@@ -1,18 +1,18 @@
 // ── Shared Variables (mirrors home.scss theme) ────────────────────────────────
-$bg-page: #0d1117;
-$bg-card: #161b22;
-$bg-panel: #1c2230;
-$bg-input: #1e2535;
-$border-color: #2a3348;
-$text-primary: #e6edf3;
-$text-muted: #7d8590;
-$accent: #ff2d78;
+$bg-page: #0d0d12;
+$bg-card: #16151d;
+$bg-panel: #1f1d2b;
+$bg-input: #272436;
+$border-color: #38334a;
+$text-primary: #f4f4f6;
+$text-muted: #9e9aa8;
+$accent: #ff6b35;
 $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 // severity palette
-$severity-high: #ff4d4d;
-$severity-medium: #f5a623;
-$severity-low: #3fb950;
+$severity-high: #ef4444;
+$severity-medium: #f59e0b;
+$severity-low: #10b981;
 
 *::-webkit-scrollbar {
     display: none;
