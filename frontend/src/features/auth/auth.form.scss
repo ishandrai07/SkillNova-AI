@@ -42,4 +42,14 @@ main{
        color: #ff6b35; 
        text-decoration: none;
     }
+
+    .error-message{
+        background-color: rgba(220, 53, 69, 0.15);
+        color: #ff4d5e;
+        border: 1px solid rgba(220, 53, 69, 0.3);
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+    }
 }

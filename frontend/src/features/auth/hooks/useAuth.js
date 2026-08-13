@@ -1,7 +1,6 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../auth.context";
 import {login, register, logout, getMe} from "../services/auth.api"
-import { useEffect } from "react";
 
 
 export const useAuth = ()=> {
@@ -13,36 +12,39 @@ export const useAuth = ()=> {
         setloading(true)
 
         try{
-            const data =  await login({email, password})
-            setuser(data.user)
+            const data = await login({email, password})
+            if(data?.user) {
+                setuser(data.user)
+                return { success: true }
+            }
+            return { success: false, error: "Login failed. Please try again." }
         }
         catch(err){
-            
-            
+            const message = err?.response?.data?.message || "Invalid email or password"
+            console.error("Login error:", err)
+            return { success: false, error: message }
         }
         finally{
-
             setloading(false)
         }
-
-
-
-
-        
     }
 
     const handleRegister = async ({username, email, password}) => {
         setloading(true)
-        try{2
-
-            const data =  await register({username, email, password})
-            setuser(data.user)
+        try{
+            const data = await register({username, email, password})
+            if(data?.user) {
+                setuser(data.user)
+                return { success: true }
+            }
+            return { success: false, error: "Registration failed. Please try again." }
         }
         catch(err){
-
+            const message = err?.response?.data?.message || "Registration failed. Please try again."
+            console.error("Register error:", err)
+            return { success: false, error: message }
         }
         finally{
-
             setloading(false)
         }
     }
@@ -50,15 +52,13 @@ export const useAuth = ()=> {
     const handleLogout = async () => {
         setloading(true)
         try{
-
-            const data =  await logout()
+            await logout()
             setuser(null)
         }
         catch(err){
-
+            console.error("Logout error:", err)
         }
         finally{
-
             setloading(false)
         }
     }
@@ -66,18 +66,22 @@ export const useAuth = ()=> {
     useEffect(() => {
       const getAndSetUser = async ()=> {
         try{
-            const data =await getMe()
-            setuser(data.user)
+            const data = await getMe()
+            if(data?.user) {
+                setuser(data.user)
+            }
         }
-        catch(err){ } finally{
+        catch(err){
+            // No token / unauthorized — normal on fresh start
+        }
+        finally{
             setloading(false)
         }
-        
-        
       }
 
       getAndSetUser()
 
     }, [])
+
     return {user, loading, handleRegister, handleLogin, handleLogout}
 }

@@ -1,21 +1,27 @@
 import React, { useState } from 'react'
 import "../auth.form.scss"
-import { useNavigate,Link } from 'react-router'
+import { useNavigate, Link } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
 
 
-const login = () => {
+const Login = () => {
   
   const {loading, handleLogin} = useAuth()
   const navigate = useNavigate()
 
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
+  const [error, setError] = useState("")
 
-  const handleSubmit =async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    await handleLogin({email, password})
-    navigate("/")
+    setError("")
+    const result = await handleLogin({email, password})
+    if(result?.success) {
+      navigate("/")
+    } else {
+      setError(result?.error || "Login failed. Please try again.")
+    }
   }
 
   if(loading){
@@ -26,6 +32,8 @@ const login = () => {
     <main>
       <div className='form-container'>
         <h1>Login</h1>
+
+        {error && <p className='error-message'>{error}</p>}
 
         <form onSubmit={handleSubmit}>
 
@@ -47,4 +55,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login
