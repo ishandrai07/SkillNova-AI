@@ -1,13 +1,14 @@
 main{
     min-height: 100vh;
     width: 100%;
+    padding: 1.5rem;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     .form-container{
-        min-width: 350px;
+        width: min(380px, 100%);
 
         display: flex;
         flex-direction: column;
@@ -34,6 +35,8 @@ main{
             padding-inline: 1rem;
             padding-block: 0.75rem;
             border-radius: 0.75rem;
+            width: 100%;
+            min-height: 44px; // Touch-friendly tap target
         }
 
     }
@@ -51,5 +54,12 @@ main{
         padding: 0.75rem 1rem;
         font-size: 0.9rem;
         text-align: center;
+        word-break: break-word;
     }
-}
+
+    .button {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+}

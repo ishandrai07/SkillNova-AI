@@ -14,6 +14,12 @@ $info-bg:        #2a1d1a;
 $info-border:    #523224;
 $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
+// ── Breakpoints ───────────────────────────────────────────────────────────────
+$mobile:  480px;
+$tablet:  768px;
+$laptop:  1024px;
+$desktop: 1440px;
+
 // ── Page Shell ───────────────────────────────────────────────────────────────
 .home-page {
     width: 100%;
@@ -28,22 +34,37 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     justify-content: center;
     padding: 3rem 1.5rem;
     gap: 2rem;
+
+    @media (max-width: $tablet) {
+        padding: 2rem 1rem;
+        gap: 1.5rem;
+        justify-content: flex-start;
+    }
+
+    @media (max-width: $mobile) {
+        padding: 1.5rem 0.75rem;
+        gap: 1.25rem;
+    }
 }
 
 // ── Page Header ──────────────────────────────────────────────────────────────
 .page-header {
     text-align: center;
+    width: 100%;
+    max-width: 600px;
+    padding-inline: 0.5rem;
 
     h1 {
-        font-size: 2.25rem;
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
         font-weight: 700;
         margin-bottom: 0.5rem;
         color: $text-primary;
+        line-height: 1.25;
     }
 
     p {
         color: $text-muted;
-        font-size: 0.95rem;
+        font-size: clamp(0.85rem, 2vw, 0.95rem);
         max-width: 480px;
         margin: 0 auto;
         line-height: 1.6;
@@ -66,6 +87,11 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     &__body {
         display: flex;
         min-height: 520px;
+
+        @media (max-width: $tablet) {
+            flex-direction: column;
+            min-height: unset;
+        }
     }
 
     &__footer {
@@ -74,10 +100,27 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         justify-content: space-between;
         padding: 1rem 1.5rem;
         border-top: 1px solid $border-color;
+        gap: 1rem;
 
         .footer-info {
             font-size: 0.8rem;
             color: $text-muted;
+        }
+
+        @media (max-width: $mobile) {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 1rem;
+            gap: 0.75rem;
+
+            .footer-info {
+                text-align: center;
+            }
+
+            .generate-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     }
 }
@@ -87,6 +130,11 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     width: 1px;
     background-color: $border-color;
     flex-shrink: 0;
+
+    @media (max-width: $tablet) {
+        width: 100%;
+        height: 1px;
+    }
 }
 
 .panel {
@@ -96,17 +144,28 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     gap: 1rem;
     padding: 1.5rem;
 
+    @media (max-width: $tablet) {
+        padding: 1.25rem;
+    }
+
+    @media (max-width: $mobile) {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
     &__header {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         margin-bottom: 0.25rem;
+        flex-wrap: wrap;
 
         h2 {
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
             font-weight: 600;
             color: $text-primary;
             flex: 1;
+            min-width: 0;
         }
     }
 
@@ -114,6 +173,7 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         display: flex;
         align-items: center;
         color: $accent;
+        flex-shrink: 0;
     }
 
     &__textarea {
@@ -130,6 +190,7 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         outline: none;
         transition: border-color 0.2s;
         line-height: 1.5;
+        min-height: 160px;
 
         &::placeholder {
             color: $text-muted;
@@ -142,6 +203,11 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         &--short {
             flex: unset;
             height: 96px;
+            min-height: 96px;
+        }
+
+        @media (max-width: $tablet) {
+            min-height: 140px;
         }
     }
 
@@ -154,6 +220,17 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
             right: 2rem;
             font-size: 0.75rem;
             color: $text-muted;
+            pointer-events: none;
+
+            @media (max-width: $tablet) {
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+
+            @media (max-width: $mobile) {
+                bottom: 1.25rem;
+                right: 1.25rem;
+            }
         }
     }
 
@@ -170,6 +247,7 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     border-radius: 0.3rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
+    white-space: nowrap;
 
     &--required {
         background-color: rgba($badge-required, 0.15);
@@ -193,6 +271,7 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     font-weight: 500;
     color: $text-primary;
     margin-bottom: 0.25rem;
+    flex-wrap: wrap;
 }
 
 // ── Dropzone ──────────────────────────────────────────────────────────────────
@@ -214,6 +293,7 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     border-radius: 0.6rem;
     cursor: pointer;
     transition: border-color 0.2s, background-color 0.2s;
+    width: 100%;
 
     &:hover {
         border-color: $accent;
@@ -230,6 +310,7 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         font-weight: 500;
         color: $text-primary;
         margin: 0;
+        text-align: center;
     }
 
     &__subtitle {
@@ -288,6 +369,7 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         font-size: 0.8rem;
         color: #ffb990;
         line-height: 1.5;
+        word-break: break-word;
 
         strong {
             color: $text-primary;
@@ -310,6 +392,8 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     cursor: pointer;
     transition: opacity 0.2s, transform 0.1s;
     font-family: $font-stack;
+    white-space: nowrap;
+    flex-shrink: 0;
 
     &:hover {
         opacity: 0.9;
@@ -318,14 +402,28 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     &:active {
         transform: scale(0.98);
     }
+
+    @media (max-width: $mobile) {
+        font-size: 0.85rem;
+        padding: 0.7rem 1.25rem;
+        white-space: normal;
+        flex-shrink: 1;
+    }
 }
 
+// ── Recent Reports ────────────────────────────────────────────────────────────
 .recent-reports{
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     width: 100%;
     max-width: 900px;
+
+    h2 {
+        font-size: clamp(1rem, 3vw, 1.25rem);
+        font-weight: 600;
+        color: $text-primary;
+    }
 
     .reports-list{
         display: flex;
@@ -337,18 +435,46 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
             border: 1px solid $border-color;
             border-radius: 0.5rem;
             padding: 1rem;
-            flex: 1;
+            flex: 1 1 260px;   // grow, shrink, min-width so cards don't get too thin
+            max-width: 100%;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
             cursor: pointer;
-            flex-shrink: 0;
+            transition: border-color 0.2s;
+            word-break: break-word;
+
+            &:hover {
+                border-color: lighten($border-color, 10%);
+            }
+
+            h3 {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: $text-primary;
+                margin: 0;
+            }
+
+            .report-meta {
+                font-size: 0.78rem;
+                color: $text-muted;
+                margin: 0;
+            }
 
             .match-score {
                 font-size: 0.8rem;
                 font-weight: 600;
                 color: $accent;
                 align-items: flex-start;
+                margin: 0;
+            }
+        }
+
+        @media (max-width: $mobile) {
+            flex-direction: column;
+
+            .report-item {
+                flex: 1 1 100%;
             }
         }
     }
@@ -359,6 +485,9 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
 .page-footer {
     display: flex;
     gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 1rem;
 
     a {
         font-size: 0.8rem;
@@ -370,4 +499,27 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
             color: $text-primary;
         }
     }
+
+    @media (max-width: $mobile) {
+        gap: 1rem;
+    }
 }
+
+// ── Loading Screen ────────────────────────────────────────────────────────────
+.loading-screen {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-page;
+    padding: 1.5rem;
+
+    h1 {
+        font-size: clamp(1.1rem, 3vw, 1.5rem);
+        color: $text-muted;
+        text-align: center;
+    }
+}
+
+

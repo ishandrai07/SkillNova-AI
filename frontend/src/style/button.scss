@@ -1,10 +1,12 @@
 .button{
     border: none;
     outline: none;
-    padding-inline:1.5rem ;
+    padding-inline: 1.5rem;
     padding-block: 0.75rem;
     border-radius: 1rem;
     cursor: pointer;
+    white-space: nowrap;
+    min-height: 44px; // Accessible tap target
 
     transition: all 0.3s ease-in-out;
 
@@ -15,5 +17,12 @@
 
     &:active{
         transform: scale(0.9);
+    }
+
+    @media (max-width: 480px) {
+        padding-inline: 1rem;
+        font-size: 0.9rem;
+        white-space: normal;
+        word-break: break-word;
     }
 }
