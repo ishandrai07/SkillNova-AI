@@ -8,11 +8,14 @@ const Home = () => {
     const { loading, generateReport,reports } = useInterview()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
+    const [ error, setError ] = useState("")
     const resumeInputRef = useRef()
 
     const navigate = useNavigate()
 
     const handleGenerateReport = async () => {
+
+    setError("");
 
     const resumeFile =
         resumeInputRef.current?.files?.[0] || null;
@@ -32,13 +35,14 @@ const Home = () => {
         return;
     }
 
-    const data = await generateReport({
+    const { data, error: reportError } = await generateReport({
         jobDescription,
         selfDescription,
         resumeFile,
     });
 
-    if (!data) {
+    if (reportError) {
+        setError(reportError);
         return;
     }
 
@@ -61,6 +65,13 @@ const Home = () => {
                 <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
                 <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
             </header>
+
+            {error && (
+                <div className='error-banner'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    {error}
+                </div>
+            )}
 
             {/* Main Card */}
             <div className='interview-card'>
