@@ -31,21 +31,116 @@ $desktop: 1440px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 3rem 1.5rem;
+    justify-content: flex-start;
+    padding: 0 1.5rem 3rem;
     gap: 2rem;
 
     @media (max-width: $tablet) {
-        padding: 2rem 1rem;
+        padding: 0 1rem 2rem;
         gap: 1.5rem;
-        justify-content: flex-start;
     }
 
     @media (max-width: $mobile) {
-        padding: 1.5rem 0.75rem;
+        padding: 0 0.75rem 1.5rem;
         gap: 1.25rem;
     }
 }
+
+// ── App Navbar ────────────────────────────────────────────────────────────────
+.app-navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.5rem;
+    border-bottom: 1px solid $border-color;
+    background-color: rgba($bg-card, 0.85);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    margin-bottom: 1rem;
+
+    // stretch edge-to-edge despite parent padding
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    width: calc(100% + 3rem);
+
+    @media (max-width: $tablet) {
+        margin-left: -1rem;
+        margin-right: -1rem;
+        width: calc(100% + 2rem);
+        padding: 0.75rem 1rem;
+    }
+
+    @media (max-width: $mobile) {
+        margin-left: -0.75rem;
+        margin-right: -0.75rem;
+        width: calc(100% + 1.5rem);
+        padding: 0.65rem 0.75rem;
+    }
+
+    &__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: $accent;
+        letter-spacing: -0.01em;
+
+        svg { flex-shrink: 0; }
+    }
+
+    &__right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    &__username {
+        font-size: 0.85rem;
+        color: $text-muted;
+        white-space: nowrap;
+
+        @media (max-width: $mobile) {
+            display: none;
+        }
+    }
+}
+
+// ── Logout Button ─────────────────────────────────────────────────────────────
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: $font-stack;
+    color: $text-muted;
+    background: transparent;
+    border: 1px solid $border-color;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    white-space: nowrap;
+
+    svg { flex-shrink: 0; transition: transform 0.2s; }
+
+    &:hover {
+        color: #ff6b78;
+        border-color: rgba(220, 53, 69, 0.45);
+        background: rgba(220, 53, 69, 0.07);
+
+        svg { transform: translateX(2px); }
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
+}
+
 
 // ── Page Header ──────────────────────────────────────────────────────────────
 .page-header {

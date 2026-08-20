@@ -15,9 +15,9 @@ $severity-medium: #f59e0b;
 $severity-low: #10b981;
 
 // ── Breakpoints ───────────────────────────────────────────────────────────────
-$mobile:  480px;
-$tablet:  768px;
-$laptop:  1024px;
+$mobile: 480px;
+$tablet: 768px;
+$laptop: 1024px;
 $desktop: 1440px;
 
 *::-webkit-scrollbar {
@@ -56,7 +56,7 @@ $desktop: 1440px;
     border: 1px solid $border-color;
     border-radius: 1rem;
     justify-content: space-between;
-    overflow: hidden;          // keep child borders inside radius
+    overflow: hidden; // keep child borders inside radius
 
     @media (max-width: $laptop) {
         // on laptop, shrink sidebar a little
@@ -278,7 +278,7 @@ $desktop: 1440px;
     }
 
     @media (max-width: $tablet) {
-        max-height: none;      // let page scroll naturally on mobile
+        max-height: none; // let page scroll naturally on mobile
         padding: 1.25rem 1rem;
         padding-bottom: 2rem;
         overflow-y: visible;
@@ -705,5 +705,44 @@ $desktop: 1440px;
         font-size: clamp(1.1rem, 3vw, 1.5rem);
         color: $text-muted;
         text-align: center;
+    }
+}
+
+// ── Logout Button (Interview Nav) ─────────────────────────────────────────────
+.logout-btn--nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: $text-muted;
+    background: transparent;
+    border: 1px solid $border-color;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    margin-top: 0.5rem;
+
+    svg {
+        flex-shrink: 0;
+        transition: transform 0.2s;
+    }
+
+    &:hover {
+        color: #ff6b78;
+        border-color: rgba(220, 53, 69, 0.45);
+        background: rgba(220, 53, 69, 0.07);
+
+        svg {
+            transform: translateX(2px);
+        }
+    }
+
+    &:active {
+        transform: scale(0.97);
     }
 }

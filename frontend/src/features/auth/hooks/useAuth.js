@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { AuthContext } from "../auth.context";
 import {login, register, logout, getMe} from "../services/auth.api"
 
@@ -6,6 +7,7 @@ import {login, register, logout, getMe} from "../services/auth.api"
 export const useAuth = ()=> {
     const context = useContext(AuthContext)
     const {user, setuser, loading, setloading} = context
+    const navigate = useNavigate()
 
 
     const handleLogin = async ({email, password}) => {
@@ -54,6 +56,7 @@ export const useAuth = ()=> {
         try{
             await logout()
             setuser(null)
+            navigate("/login")
         }
         catch(err){
             console.error("Logout error:", err)
