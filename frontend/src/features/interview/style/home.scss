@@ -1,18 +1,17 @@
 // ── Variables ────────────────────────────────────────────────────────────────
-$bg-page:        #0d0d12;
-$bg-card:        #16151d;
-$bg-panel:       #1f1d2b;
-$bg-input:       #272436;
-$border-color:   #38334a;
-$text-primary:   #f4f4f6;
-$text-muted:     #9e9aa8;
-$accent:         #ff6b35;
-$accent-alt:     #ff9248;
-$badge-required: #ff6b35;
-$badge-best:     #ff6b35;
-$info-bg:        #2a1d1a;
-$info-border:    #523224;
-$font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$bg-page:        #0B0B0C;
+$bg-card:        #161618;
+$bg-panel:       #161618;
+$bg-input:       #111113;
+$border-color:   #262626;
+$border-hover:   #383838;
+$text-primary:   #F4F4F6;
+$text-secondary: #A1A1AA;
+$text-muted:     #71717A;
+$accent:         #F05A28;
+$accent-hover:   #D94D1F;
+$radius:         8px;
+$font-stack:     'Hanken Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 // ── Breakpoints ───────────────────────────────────────────────────────────────
 $mobile:  480px;
@@ -52,10 +51,9 @@ $desktop: 1440px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.9rem 1.5rem;
+    padding: 0.85rem 1.5rem;
     border-bottom: 1px solid $border-color;
-    background-color: rgba($bg-card, 0.85);
-    backdrop-filter: blur(8px);
+    background-color: $bg-card;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -83,13 +81,16 @@ $desktop: 1440px;
     &__brand {
         display: flex;
         align-items: center;
-        gap: 0.45rem;
+        gap: 0.5rem;
         font-size: 1rem;
         font-weight: 700;
-        color: $accent;
+        color: $text-primary;
         letter-spacing: -0.01em;
 
-        svg { flex-shrink: 0; }
+        svg {
+            color: $accent;
+            flex-shrink: 0;
+        }
     }
 
     &__right {
@@ -99,8 +100,9 @@ $desktop: 1440px;
     }
 
     &__username {
-        font-size: 0.85rem;
-        color: $text-muted;
+        font-size: 0.825rem;
+        font-weight: 500;
+        color: $text-secondary;
         white-space: nowrap;
 
         @media (max-width: $mobile) {
@@ -114,53 +116,47 @@ $desktop: 1440px;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.45rem 0.9rem;
-    font-size: 0.82rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8125rem;
     font-weight: 600;
     font-family: $font-stack;
-    color: $text-muted;
-    background: transparent;
+    color: $text-secondary;
+    background: $bg-input;
     border: 1px solid $border-color;
-    border-radius: 0.4rem;
+    border-radius: $radius;
     cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    transition: color 0.15s, border-color 0.15s, background-color 0.15s;
     white-space: nowrap;
 
-    svg { flex-shrink: 0; transition: transform 0.2s; }
+    svg { flex-shrink: 0; }
 
     &:hover {
-        color: #ff6b78;
-        border-color: rgba(220, 53, 69, 0.45);
-        background: rgba(220, 53, 69, 0.07);
-
-        svg { transform: translateX(2px); }
-    }
-
-    &:active {
-        transform: scale(0.97);
+        color: #ef4444;
+        border-color: #42181c;
+        background-color: #1e1112;
     }
 }
-
 
 // ── Page Header ──────────────────────────────────────────────────────────────
 .page-header {
     text-align: center;
     width: 100%;
-    max-width: 600px;
+    max-width: 640px;
     padding-inline: 0.5rem;
 
     h1 {
-        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        font-size: clamp(1.5rem, 4vw, 2.125rem);
         font-weight: 700;
         margin-bottom: 0.5rem;
         color: $text-primary;
         line-height: 1.25;
+        letter-spacing: -0.02em;
     }
 
     p {
-        color: $text-muted;
-        font-size: clamp(0.85rem, 2vw, 0.95rem);
-        max-width: 480px;
+        color: $text-secondary;
+        font-size: clamp(0.85rem, 2vw, 0.9375rem);
+        max-width: 520px;
         margin: 0 auto;
         line-height: 1.6;
     }
@@ -173,15 +169,15 @@ $desktop: 1440px;
 // ── Main Card ─────────────────────────────────────────────────────────────────
 .interview-card {
     width: 100%;
-    max-width: 900px;
+    max-width: 940px;
     background-color: $bg-card;
     border: 1px solid $border-color;
-    border-radius: 1rem;
+    border-radius: $radius;
     overflow: hidden;
 
     &__body {
         display: flex;
-        min-height: 520px;
+        min-height: 500px;
 
         @media (max-width: $tablet) {
             flex-direction: column;
@@ -195,11 +191,13 @@ $desktop: 1440px;
         justify-content: space-between;
         padding: 1rem 1.5rem;
         border-top: 1px solid $border-color;
+        background-color: $bg-card;
         gap: 1rem;
 
         .footer-info {
-            font-size: 0.8rem;
+            font-size: 0.78125rem;
             color: $text-muted;
+            font-weight: 500;
         }
 
         @media (max-width: $mobile) {
@@ -256,11 +254,12 @@ $desktop: 1440px;
         flex-wrap: wrap;
 
         h2 {
-            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-size: 0.9375rem;
             font-weight: 600;
             color: $text-primary;
             flex: 1;
             min-width: 0;
+            letter-spacing: -0.01em;
         }
     }
 
@@ -276,16 +275,16 @@ $desktop: 1440px;
         width: 100%;
         background-color: $bg-input;
         border: 1px solid $border-color;
-        border-radius: 0.5rem;
+        border-radius: $radius;
         padding: 0.75rem 1rem;
         color: $text-primary;
         font-family: $font-stack;
         font-size: 0.875rem;
         resize: none;
         outline: none;
-        transition: border-color 0.2s;
+        transition: border-color 0.15s ease;
         line-height: 1.5;
-        min-height: 160px;
+        min-height: 170px;
 
         &::placeholder {
             color: $text-muted;
@@ -297,8 +296,8 @@ $desktop: 1440px;
 
         &--short {
             flex: unset;
-            height: 96px;
-            min-height: 96px;
+            height: 90px;
+            min-height: 90px;
         }
 
         @media (max-width: $tablet) {
@@ -311,9 +310,10 @@ $desktop: 1440px;
 
         .char-counter {
             position: absolute;
-            bottom: 2.25rem;
+            bottom: 2.125rem;
             right: 2rem;
             font-size: 0.75rem;
+            font-weight: 500;
             color: $text-muted;
             pointer-events: none;
 
@@ -336,24 +336,24 @@ $desktop: 1440px;
 
 // ── Badges ────────────────────────────────────────────────────────────────────
 .badge {
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 0.15rem 0.5rem;
-    border-radius: 0.3rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: $radius;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
     white-space: nowrap;
 
     &--required {
-        background-color: rgba($badge-required, 0.15);
-        color: $badge-required;
-        border: 1px solid rgba($badge-required, 0.3);
+        background-color: #241410;
+        color: $accent;
+        border: 1px solid #4a1f13;
     }
 
     &--best {
-        background-color: rgba($badge-best, 0.15);
-        color: $badge-best;
-        border: 1px solid rgba($badge-best, 0.3);
+        background-color: #17241c;
+        color: #10b981;
+        border: 1px solid #1e452e;
     }
 }
 
@@ -362,9 +362,11 @@ $desktop: 1440px;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: $text-primary;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     margin-bottom: 0.25rem;
     flex-wrap: wrap;
 }
@@ -373,7 +375,7 @@ $desktop: 1440px;
 .upload-section {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .dropzone {
@@ -382,30 +384,41 @@ $desktop: 1440px;
     align-items: center;
     justify-content: center;
     gap: 0.35rem;
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 1rem;
     background-color: $bg-input;
-    border: 2px dashed $border-color;
-    border-radius: 0.6rem;
+    border: 1px dashed $border-color;
+    border-radius: $radius;
     cursor: pointer;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: border-color 0.15s, background-color 0.15s;
     width: 100%;
 
     &:hover {
+        border-color: $border-hover;
+        background-color: #161618;
+    }
+
+    &--has-file {
+        border-style: solid;
         border-color: $accent;
-        background-color: rgba($accent, 0.05);
+        background-color: #1a1513;
     }
 
     &__icon {
         color: $accent;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.15rem;
     }
 
     &__title {
         font-size: 0.875rem;
-        font-weight: 500;
+        font-weight: 600;
         color: $text-primary;
         margin: 0;
         text-align: center;
+
+        &--file {
+            color: $accent;
+            word-break: break-all;
+        }
     }
 
     &__subtitle {
@@ -421,7 +434,9 @@ $desktop: 1440px;
     align-items: center;
     gap: 0.75rem;
     color: $text-muted;
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
 
     &::before,
     &::after {
@@ -440,7 +455,7 @@ $desktop: 1440px;
 .self-description {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 // ── Info Box ──────────────────────────────────────────────────────────────────
@@ -448,21 +463,21 @@ $desktop: 1440px;
     display: flex;
     align-items: flex-start;
     gap: 0.6rem;
-    padding: 0.75rem 1rem;
-    background-color: $info-bg;
-    border: 1px solid $info-border;
-    border-radius: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    background-color: $bg-input;
+    border: 1px solid $border-color;
+    border-radius: $radius;
 
     &__icon {
         flex-shrink: 0;
-        color: #ff9d66;
-        margin-top: 1px;
+        color: $accent;
+        margin-top: 2px;
     }
 
     p {
         margin: 0;
-        font-size: 0.8rem;
-        color: #ffb990;
+        font-size: 0.78125rem;
+        color: $text-secondary;
         line-height: 1.5;
         word-break: break-word;
 
@@ -474,73 +489,79 @@ $desktop: 1440px;
 
 // ── Generate Button ───────────────────────────────────────────────────────────
 .generate-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, $accent 0%, darken($accent, 10%) 100%);
-    color: #fff;
-    font-size: 0.9rem;
+    padding: 0.65rem 1.25rem;
+    background-color: $accent;
+    color: #FFFFFF;
+    font-size: 0.875rem;
     font-weight: 600;
-    border: none;
-    border-radius: 0.5rem;
+    border: 1px solid $accent;
+    border-radius: $radius;
     cursor: pointer;
-    transition: opacity 0.2s, transform 0.1s;
+    transition: background-color 0.15s, border-color 0.15s;
     font-family: $font-stack;
     white-space: nowrap;
     flex-shrink: 0;
 
     &:hover {
-        opacity: 0.9;
-    }
-
-    &:active {
-        transform: scale(0.98);
+        background-color: $accent-hover;
+        border-color: $accent-hover;
     }
 
     @media (max-width: $mobile) {
-        font-size: 0.85rem;
-        padding: 0.7rem 1.25rem;
+        font-size: 0.8125rem;
+        padding: 0.6rem 1rem;
         white-space: normal;
         flex-shrink: 1;
     }
 }
 
 // ── Recent Reports ────────────────────────────────────────────────────────────
-.recent-reports{
+.recent-reports {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.875rem;
     width: 100%;
-    max-width: 900px;
+    max-width: 940px;
 
     h2 {
-        font-size: clamp(1rem, 3vw, 1.25rem);
-        font-weight: 600;
+        font-size: 1rem;
+        font-weight: 700;
         color: $text-primary;
+        letter-spacing: -0.01em;
     }
 
-    .reports-list{
+    .reports-list {
         display: flex;
-        gap: 0.75rem;
+        gap: 0.875rem;
         flex-wrap: wrap;
 
-        .report-item{
+        .report-item {
             background-color: $bg-card;
             border: 1px solid $border-color;
-            border-radius: 0.5rem;
+            border-radius: $radius;
             padding: 1rem;
-            flex: 1 1 260px;   // grow, shrink, min-width so cards don't get too thin
+            flex: 1 1 270px;
             max-width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
             cursor: pointer;
-            transition: border-color 0.2s;
+            transition: border-color 0.15s, background-color 0.15s;
             word-break: break-word;
 
             &:hover {
-                border-color: lighten($border-color, 10%);
+                border-color: $border-hover;
+                background-color: #1c1c1f;
+            }
+
+            &__top {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 0.5rem;
             }
 
             h3 {
@@ -550,17 +571,35 @@ $desktop: 1440px;
                 margin: 0;
             }
 
-            .report-meta {
-                font-size: 0.78rem;
-                color: $text-muted;
-                margin: 0;
+            .match-badge {
+                font-size: 0.72rem;
+                font-weight: 700;
+                padding: 0.15rem 0.45rem;
+                border-radius: $radius;
+                white-space: nowrap;
+
+                &.score--high {
+                    background-color: #17241c;
+                    color: #10b981;
+                    border: 1px solid #1e452e;
+                }
+
+                &.score--mid {
+                    background-color: #242014;
+                    color: #f59e0b;
+                    border: 1px solid #4a3e1c;
+                }
+
+                &.score--low {
+                    background-color: #241410;
+                    color: $accent;
+                    border: 1px solid #4a1f13;
+                }
             }
 
-            .match-score {
-                font-size: 0.8rem;
-                font-weight: 600;
-                color: $accent;
-                align-items: flex-start;
+            .report-meta {
+                font-size: 0.78125rem;
+                color: $text-muted;
                 margin: 0;
             }
         }
@@ -585,10 +624,10 @@ $desktop: 1440px;
     padding-bottom: 1rem;
 
     a {
-        font-size: 0.8rem;
+        font-size: 0.8125rem;
         color: $text-muted;
         text-decoration: none;
-        transition: color 0.2s;
+        transition: color 0.15s;
 
         &:hover {
             color: $text-primary;
@@ -606,27 +645,21 @@ $desktop: 1440px;
     align-items: center;
     gap: 0.6rem;
     width: 100%;
-    max-width: 900px;
-    padding: 0.85rem 1.1rem;
-    background-color: rgba(220, 53, 69, 0.12);
-    border: 1px solid rgba(220, 53, 69, 0.35);
-    border-radius: 0.6rem;
-    color: #ff6b78;
-    font-size: 0.875rem;
+    max-width: 940px;
+    padding: 0.75rem 1rem;
+    background-color: #1e1112;
+    border: 1px solid #42181c;
+    border-radius: $radius;
+    color: #fca5a5;
+    font-size: 0.845rem;
     font-weight: 500;
     line-height: 1.4;
     word-break: break-word;
-    animation: slideIn 0.25s ease;
 
     svg {
         flex-shrink: 0;
-        color: #ff4d5e;
+        color: #ef4444;
     }
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
 }
 
 // ── Loading Screen ────────────────────────────────────────────────────────────
@@ -639,11 +672,33 @@ $desktop: 1440px;
     background-color: $bg-page;
     padding: 1.5rem;
 
+    .loading-box {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.25rem 1.75rem;
+        background-color: $bg-card;
+        border: 1px solid $border-color;
+        border-radius: $radius;
+    }
+
+    .spinner {
+        color: $accent;
+        animation: spin 1s linear infinite;
+    }
+
     h1 {
-        font-size: clamp(1.1rem, 3vw, 1.5rem);
-        color: $text-muted;
-        text-align: center;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: $text-primary;
+        margin: 0;
     }
 }
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
 
 

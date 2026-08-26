@@ -1,28 +1,70 @@
-.button{
-    border: none;
-    outline: none;
-    padding-inline: 1.5rem;
-    padding-block: 0.75rem;
-    border-radius: 1rem;
-    cursor: pointer;
-    white-space: nowrap;
-    min-height: 44px; // Accessible tap target
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 40px;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  user-select: none;
 
-    transition: all 0.3s ease-in-out;
+  svg {
+    flex-shrink: 0;
+  }
 
-    &.primary-button{
-        background: linear-gradient(135deg, #ff6b35 0%, #d94e1f 100%);
-        color: whitesmoke;
+  &.primary-button {
+    background-color: var(--brand-accent);
+    color: #FFFFFF;
+    border-color: var(--brand-accent);
+
+    &:hover {
+      background-color: var(--brand-accent-hover);
+      border-color: var(--brand-accent-hover);
     }
 
-    &:active{
-        transform: scale(0.9);
+    &:active {
+      background-color: var(--brand-accent-active);
+      border-color: var(--brand-accent-active);
     }
 
-    @media (max-width: 480px) {
-        padding-inline: 1rem;
-        font-size: 0.9rem;
-        white-space: normal;
-        word-break: break-word;
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
+  }
+
+  &.secondary-button {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+
+    &:hover {
+      background-color: var(--bg-surface-hover);
+      border-color: var(--border-color-hover);
+    }
+  }
+
+  &.ghost-button {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+
+    &:hover {
+      background-color: var(--bg-surface-hover);
+      color: var(--text-primary);
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+  }
 }

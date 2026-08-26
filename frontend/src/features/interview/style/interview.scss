@@ -1,15 +1,18 @@
-// ── Shared Variables (mirrors home.scss theme) ────────────────────────────────
-$bg-page: #0d0d12;
-$bg-card: #16151d;
-$bg-panel: #1f1d2b;
-$bg-input: #272436;
-$border-color: #38334a;
-$text-primary: #f4f4f6;
-$text-muted: #9e9aa8;
-$accent: #ff6b35;
-$font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+// ── Shared Variables ──────────────────────────────────────────────────────────
+$bg-page: #0B0B0C;
+$bg-card: #161618;
+$bg-panel: #161618;
+$bg-input: #111113;
+$border-color: #262626;
+$border-hover: #383838;
+$text-primary: #F4F4F6;
+$text-secondary: #A1A1AA;
+$text-muted: #71717A;
+$accent: #F05A28;
+$radius: 8px;
+$font-stack: 'Hanken Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-// severity palette
+// severity palette (solid, professional)
 $severity-high: #ef4444;
 $severity-medium: #f59e0b;
 $severity-low: #10b981;
@@ -20,8 +23,23 @@ $tablet: 768px;
 $laptop: 1024px;
 $desktop: 1440px;
 
-*::-webkit-scrollbar {
-    display: none;
+// ── Precision Scrollbars ──────────────────────────────────────────────────────
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: $bg-page;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $border-color;
+    border-radius: 4px;
+
+    &:hover {
+        background: $border-hover;
+    }
 }
 
 // ── Page Shell ────────────────────────────────────────────────────────────────
@@ -32,13 +50,15 @@ $desktop: 1440px;
     color: $text-primary;
     font-family: $font-stack;
     display: flex;
-    align-items: stretch;
-    padding: clamp(0.5rem, 2vw, 1.5rem);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1.25rem;
     box-sizing: border-box;
+    overflow-y: auto;
 
     @media (max-width: $tablet) {
         padding: 0.75rem;
-        align-items: flex-start;
     }
 
     @media (max-width: $mobile) {
@@ -46,27 +66,28 @@ $desktop: 1440px;
     }
 }
 
-// ── 3-Column Layout ───────────────────────────────────────────────────────────
+// ── 3-Column Layout (Sidebar-First Architecture) ──────────────────────────────
 .interview-layout {
     display: flex;
     width: 100%;
-    max-width: 1280px;
+    max-width: 1320px;
     margin: 0 auto;
+    min-height: calc(100vh - 2.5rem);
     background-color: $bg-card;
     border: 1px solid $border-color;
-    border-radius: 1rem;
+    border-radius: $radius;
     justify-content: space-between;
-    overflow: hidden; // keep child borders inside radius
+    align-items: stretch;
+    box-sizing: border-box;
 
     @media (max-width: $laptop) {
-        // on laptop, shrink sidebar a little
         max-width: 100%;
     }
 
     @media (max-width: $tablet) {
-        // Stack into a single column: nav-tab-bar → sidebar-strip → content
         flex-direction: column;
-        border-radius: 0.75rem;
+        min-height: auto;
+        border-radius: $radius;
     }
 }
 
@@ -81,24 +102,43 @@ $desktop: 1440px;
     }
 }
 
-// ── Left Nav ─────────────────────────────────────────────────────────────────
+// ── Left Nav (Sidebar First) ──────────────────────────────────────────────────
 .interview-nav {
-    width: 220px;
+    width: 230px;
     flex-shrink: 0;
-    padding: 1.75rem 1rem;
+    padding: 1.5rem 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 0.25rem;
+    gap: 1.5rem;
+
+    .nav-header {
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid $border-color;
+    }
+
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: $text-primary;
+        text-decoration: none;
+
+        svg {
+            color: $accent;
+        }
+    }
 
     @media (max-width: $laptop) {
-        width: 180px;
+        width: 190px;
         padding: 1.25rem 0.75rem;
     }
 
     @media (max-width: $tablet) {
-        // Convert to horizontal tab bar
         width: 100%;
+        height: auto;
         flex-direction: row;
         align-items: center;
         padding: 0.75rem 1rem;
@@ -106,15 +146,19 @@ $desktop: 1440px;
         border-bottom: 1px solid $border-color;
         overflow-x: auto;
         flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch;
+
+        .nav-header {
+            display: none;
+        }
     }
 
-    // Keep nav-content items in a row on tablet
     .nav-content {
-        display: contents; // children behave as if directly inside nav
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        flex: 1;
 
         @media (max-width: $tablet) {
-            display: flex;
             flex-direction: row;
             gap: 0.5rem;
             align-items: center;
@@ -124,16 +168,16 @@ $desktop: 1440px;
     }
 
     &__label {
-        font-size: 0.7rem;
-        font-weight: 600;
+        font-size: 0.6875rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         color: $text-muted;
-        padding: 0 0.75rem;
+        padding: 0 0.5rem;
         margin-bottom: 0.5rem;
 
         @media (max-width: $tablet) {
-            display: none; // hide "Sections" label on mobile tab bar
+            display: none;
         }
     }
 
@@ -142,27 +186,30 @@ $desktop: 1440px;
         align-items: center;
         gap: 0.6rem;
         width: 100%;
-        padding: 0.65rem 0.75rem;
-        background: none;
-        border: none;
-        border-radius: 0.5rem;
-        color: $text-muted;
+        padding: 0.6rem 0.75rem;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: $radius;
+        color: $text-secondary;
         font-family: $font-stack;
-        font-size: 0.875rem;
+        font-size: 0.845rem;
+        font-weight: 500;
         cursor: pointer;
         text-align: left;
-        transition: background-color 0.15s, color 0.15s;
+        transition: background-color 0.15s, color 0.15s, border-color 0.15s;
         white-space: nowrap;
-        min-height: 40px;
+        min-height: 38px;
 
         &:hover {
-            background-color: $bg-panel;
+            background-color: #1c1c1f;
             color: $text-primary;
+            border-color: $border-color;
         }
 
         &--active {
-            background-color: rgba($accent, 0.1);
+            background-color: #241410;
             color: $accent;
+            border-color: #4a1f13;
 
             .interview-nav__icon svg {
                 stroke: $accent;
@@ -172,14 +219,8 @@ $desktop: 1440px;
         @media (max-width: $tablet) {
             width: auto;
             flex-shrink: 0;
-            font-size: 0.82rem;
+            font-size: 0.8125rem;
             padding: 0.5rem 0.75rem;
-        }
-
-        @media (max-width: $mobile) {
-            font-size: 0.78rem;
-            padding: 0.5rem 0.6rem;
-            gap: 0.4rem;
         }
     }
 
@@ -189,70 +230,93 @@ $desktop: 1440px;
         flex-shrink: 0;
     }
 
-    // Download Resume button in the nav (desktop: bottom, tablet: inline end)
-    .button.primary-button {
+    .nav-actions {
+        margin-top: auto;
+        padding-top: 1.25rem;
+        border-top: 1px solid $border-color;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        @media (max-width: $tablet) {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+            flex-direction: row;
+            margin-left: auto;
+            gap: 0.5rem;
+        }
+    }
+
+    .download-btn {
+        width: 100%;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        padding: 0.625rem 0.875rem;
+        border-radius: $radius;
+
+        @media (max-width: $tablet) {
+            width: auto;
+            white-space: nowrap;
+        }
+    }
+
+    .logout-btn--nav {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.85rem;
-        border-radius: 0.6rem;
-        flex-shrink: 0;
+        gap: 0.45rem;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: $text-secondary;
+        background: $bg-input;
+        border: 1px solid $border-color;
+        border-radius: $radius;
+        cursor: pointer;
+        transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+
+        &:hover {
+            color: #ef4444;
+            border-color: #42181c;
+            background-color: #1e1112;
+        }
 
         @media (max-width: $tablet) {
             width: auto;
-            margin-left: auto;
-            padding-inline: 0.75rem;
-            font-size: 0.78rem;
-            white-space: nowrap;
-        }
-
-        @media (max-width: $mobile) {
-            font-size: 0.75rem;
-            padding-inline: 0.6rem;
-
-            // hide the text, show icon only on very small screens
-            span {
-                display: none;
-            }
         }
     }
 }
 
-// ── Right Sidebar — shown ABOVE content on tablet/mobile ─────────────────────
+// ── Right Sidebar Telemetry ───────────────────────────────────────────────────
 .interview-sidebar {
-    width: 240px;
+    width: 250px;
     flex-shrink: 0;
-    padding: 1.75rem 1.25rem;
+    padding: 1.5rem 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
 
     @media (max-width: $laptop) {
-        width: 200px;
+        width: 210px;
         padding: 1.25rem 1rem;
     }
 
     @media (max-width: $tablet) {
-        // Horizontal strip: match score + skill gaps side by side
         width: 100%;
+        height: auto;
         flex-direction: row;
         align-items: flex-start;
         padding: 1rem;
         gap: 1.25rem;
         border-top: 1px solid $border-color;
         flex-wrap: wrap;
-        order: -1; // place before content in column layout
+        order: -1;
 
-        // Sidebar divider becomes hidden in horizontal mode
         .sidebar-divider {
             display: none;
         }
-    }
-
-    @media (max-width: $mobile) {
-        gap: 1rem;
-        padding: 0.875rem;
     }
 }
 
@@ -261,32 +325,19 @@ $desktop: 1440px;
     background-color: $border-color;
 }
 
-// ── Center Content ────────────────────────────────────────────────────────────
+// ── Center Content Workspace ──────────────────────────────────────────────────
 .interview-content {
     flex: 1;
-    padding: 1.75rem 2rem;
-    overflow-y: auto;
-    min-height: initial;
-    max-height: calc(100vh - 3rem);
-    padding-bottom: 5rem;
-    align-items: flex-start;
-    min-width: 0; // prevent flex child overflow
+    padding: 1.5rem 2rem;
+    min-width: 0;
+    box-sizing: border-box;
 
     @media (max-width: $laptop) {
-        padding: 1.5rem;
-        padding-bottom: 4rem;
+        padding: 1.25rem 1.5rem;
     }
 
     @media (max-width: $tablet) {
-        max-height: none; // let page scroll naturally on mobile
         padding: 1.25rem 1rem;
-        padding-bottom: 2rem;
-        overflow-y: visible;
-    }
-
-    @media (max-width: $mobile) {
-        padding: 1rem 0.75rem;
-        padding-bottom: 1.5rem;
     }
 
     section {
@@ -296,28 +347,33 @@ $desktop: 1440px;
 
 .content-header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
     margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0.875rem;
     border-bottom: 1px solid $border-color;
     flex-wrap: wrap;
 
     h2 {
-        font-size: clamp(1rem, 2.5vw, 1.1rem);
+        font-size: 1.125rem;
         font-weight: 700;
         color: $text-primary;
         margin: 0;
+        letter-spacing: -0.01em;
     }
 
     &__count {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        font-weight: 600;
         color: $text-muted;
-        background-color: $bg-panel;
-        padding: 0.15rem 0.6rem;
-        border-radius: 2rem;
+        background-color: $bg-input;
+        padding: 0.2rem 0.6rem;
+        border-radius: $radius;
         border: 1px solid $border-color;
         white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
     }
 }
 
@@ -331,13 +387,13 @@ $desktop: 1440px;
 .q-card {
     background-color: $bg-panel;
     border: 1px solid $border-color;
-    border-radius: 0.6rem;
+    border-radius: $radius;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: border-color 0.15s, background-color 0.15s;
     width: 100%;
 
     &:hover {
-        border-color: lighten($border-color, 8%);
+        border-color: $border-hover;
     }
 
     &__header {
@@ -356,36 +412,31 @@ $desktop: 1440px;
 
     &__index {
         flex-shrink: 0;
-        font-size: 0.7rem;
+        font-size: 0.6875rem;
         font-weight: 700;
         color: $accent;
-        background-color: rgba($accent, 0.1);
-        border: 1px solid rgba($accent, 0.2);
-        border-radius: 0.3rem;
-        padding: 0.15rem 0.4rem;
-        margin-top: 2px;
+        background-color: #241410;
+        border: 1px solid #4a1f13;
+        border-radius: $radius;
+        padding: 0.15rem 0.45rem;
+        margin-top: 1px;
     }
 
     &__question {
         flex: 1;
         margin: 0;
-        font-size: 0.9rem;
-        font-weight: 500;
+        font-size: 0.875rem;
+        font-weight: 600;
         color: $text-primary;
         line-height: 1.5;
         word-break: break-word;
-        overflow-wrap: break-word;
         min-width: 0;
-
-        @media (max-width: $mobile) {
-            font-size: 0.875rem;
-        }
     }
 
     &__chevron {
         flex-shrink: 0;
         color: $text-muted;
-        transition: transform 0.2s;
+        transition: transform 0.15s;
         margin-top: 2px;
 
         &--open {
@@ -398,13 +449,10 @@ $desktop: 1440px;
         padding: 0 1rem 1rem;
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 0.875rem;
         border-top: 1px solid $border-color;
-        padding-top: 0.75rem;
-
-        @media (max-width: $mobile) {
-            padding: 0.75rem 0.875rem 0.875rem;
-        }
+        padding-top: 0.875rem;
+        background-color: #111113;
     }
 
     &__section {
@@ -414,33 +462,32 @@ $desktop: 1440px;
 
         p {
             margin: 0;
-            font-size: 0.835rem;
-            color: lighten($text-muted, 15%);
+            font-size: 0.845rem;
+            color: $text-secondary;
             line-height: 1.6;
             word-break: break-word;
-            overflow-wrap: break-word;
         }
     }
 
     &__tag {
-        font-size: 0.68rem;
+        font-size: 0.6875rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.05em;
         padding: 0.15rem 0.5rem;
-        border-radius: 0.25rem;
+        border-radius: $radius;
         width: fit-content;
 
         &--intention {
             color: #a78bfa;
-            background-color: rgba(#a78bfa, 0.1);
-            border: 1px solid rgba(#a78bfa, 0.2);
+            background-color: #1c1829;
+            border: 1px solid #3b2d5c;
         }
 
         &--answer {
-            color: #3fb950;
-            background-color: rgba(#3fb950, 0.1);
-            border: 1px solid rgba(#3fb950, 0.2);
+            color: #10b981;
+            background-color: #13241c;
+            border: 1px solid #1e452e;
         }
     }
 }
@@ -449,55 +496,17 @@ $desktop: 1440px;
 .roadmap-list {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    position: relative;
-
-    // vertical timeline line
-    &::before {
-        content: '';
-        position: absolute;
-        left: 28px;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background: linear-gradient(to bottom, $accent, rgba($accent, 0.1));
-        border-radius: 1px;
-    }
-
-    @media (max-width: $mobile) {
-        &::before {
-            left: 20px;
-        }
-    }
+    gap: 0.75rem;
 }
 
 .roadmap-day {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.75rem 0 0.75rem 3.5rem;
-    position: relative;
-
-    // dot on timeline
-    &::before {
-        content: '';
-        position: absolute;
-        left: 21px;
-        top: 1.05rem;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background-color: $bg-card;
-        border: 2px solid $accent;
-    }
-
-    @media (max-width: $mobile) {
-        padding: 0.75rem 0 0.75rem 2.75rem;
-
-        &::before {
-            left: 13px;
-        }
-    }
+    gap: 0.6rem;
+    padding: 1rem;
+    background-color: $bg-panel;
+    border: 1px solid $border-color;
+    border-radius: $radius;
 
     &__header {
         display: flex;
@@ -507,19 +516,21 @@ $desktop: 1440px;
     }
 
     &__badge {
-        font-size: 0.7rem;
+        font-size: 0.6875rem;
         font-weight: 700;
         color: $accent;
-        background-color: rgba($accent, 0.1);
-        border: 1px solid rgba($accent, 0.25);
-        padding: 0.1rem 0.5rem;
-        border-radius: 2rem;
+        background-color: #241410;
+        border: 1px solid #4a1f13;
+        padding: 0.15rem 0.5rem;
+        border-radius: $radius;
         white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
     }
 
     &__focus {
         margin: 0;
-        font-size: 0.95rem;
+        font-size: 0.9375rem;
         font-weight: 600;
         color: $text-primary;
         word-break: break-word;
@@ -531,14 +542,14 @@ $desktop: 1440px;
         padding: 0;
         display: flex;
         flex-direction: column;
-        gap: 0.35rem;
+        gap: 0.4rem;
 
         li {
             display: flex;
             align-items: flex-start;
             gap: 0.5rem;
             font-size: 0.845rem;
-            color: lighten($text-muted, 12%);
+            color: $text-secondary;
             line-height: 1.5;
             word-break: break-word;
         }
@@ -546,90 +557,79 @@ $desktop: 1440px;
 
     &__bullet {
         flex-shrink: 0;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background-color: $text-muted;
+        width: 4px;
+        height: 4px;
+        border-radius: 2px;
+        background-color: $accent;
         margin-top: 8px;
     }
 }
 
-// ── Match Score ───────────────────────────────────────────────────────────────
+// ── Match Score Gauge Card ───────────────────────────────────────────────────
 .match-score {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 0.6rem;
 
-    @media (max-width: $tablet) {
-        align-items: center;
-        flex: 0 0 auto;
-    }
-
     &__label {
-        font-size: 0.75rem;
-        font-weight: 600;
+        font-size: 0.6875rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         color: $text-muted;
         margin: 0;
-        align-self: flex-start;
     }
 
-    &__ring {
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
+    &__card {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        border: 4px solid;
+        gap: 0.25rem;
+        padding: 1.25rem 1rem;
+        background-color: $bg-input;
+        border: 1px solid $border-color;
+        border-radius: $radius;
 
         &.score--high {
-            border-color: $severity-low;
+            border-left: 4px solid $severity-low;
         }
 
         &.score--mid {
-            border-color: $severity-medium;
+            border-left: 4px solid $severity-medium;
         }
 
         &.score--low {
-            border-color: $severity-high;
+            border-left: 4px solid $accent;
         }
+    }
 
-        @media (max-width: $tablet) {
-            width: 78px;
-            height: 78px;
-        }
+    &__number {
+        display: flex;
+        align-items: baseline;
     }
 
     &__value {
-        font-size: 1.6rem;
+        font-size: 2rem;
         font-weight: 800;
         color: $text-primary;
         line-height: 1;
-
-        @media (max-width: $tablet) {
-            font-size: 1.4rem;
-        }
+        letter-spacing: -0.03em;
     }
 
     &__pct {
-        font-size: 0.75rem;
-        color: $text-muted;
-        margin-top: -2px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: $accent;
+        margin-left: 2px;
     }
 
-    &__sub {
-        margin: 0;
+    &__status {
         font-size: 0.75rem;
-        color: $severity-low;
-        text-align: center;
-
-        @media (max-width: $tablet) {
-            font-size: 0.7rem;
-        }
+        font-weight: 600;
+        color: $text-secondary;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
     }
 }
 
@@ -637,57 +637,68 @@ $desktop: 1440px;
 .skill-gaps {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-
-    @media (max-width: $tablet) {
-        flex: 1;
-        min-width: 0;
-    }
+    gap: 0.6rem;
 
     &__label {
-        font-size: 0.75rem;
-        font-weight: 600;
+        font-size: 0.6875rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         color: $text-muted;
         margin: 0;
     }
 
     &__list {
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        flex-direction: column;
+        gap: 0.4rem;
     }
 }
 
 .skill-tag {
-    font-size: 0.775rem;
+    font-size: 0.8125rem;
     font-weight: 500;
-    padding: 0.3rem 0.7rem;
-    border-radius: 0.4rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: $radius;
     border: 1px solid;
     cursor: default;
-    white-space: normal;
-    overflow-wrap: break-word;
     word-break: break-word;
-    max-width: 100%;
+    display: block;
+
+    &__severity {
+        font-size: 0.6875rem;
+        font-weight: 700;
+        margin-right: 0.25rem;
+    }
 
     &--high {
-        color: $severity-high;
-        background-color: rgba($severity-high, 0.1);
-        border-color: rgba($severity-high, 0.25);
+        color: #fca5a5;
+        background-color: #1e1112;
+        border-color: #42181c;
+
+        .skill-tag__severity {
+            color: $severity-high;
+        }
     }
 
     &--medium {
-        color: $severity-medium;
-        background-color: rgba($severity-medium, 0.1);
-        border-color: rgba($severity-medium, 0.25);
+        color: #fde68a;
+        background-color: #242014;
+        border-color: #4a3e1c;
+
+        .skill-tag__severity {
+            color: $severity-medium;
+        }
     }
 
     &--low {
-        color: $severity-low;
-        background-color: rgba($severity-low, 0.1);
-        border-color: rgba($severity-low, 0.25);
+        color: #6ee7b7;
+        background-color: #13241c;
+        border-color: #1e452e;
+
+        .skill-tag__severity {
+            color: $severity-low;
+        }
     }
 }
 
@@ -701,48 +712,25 @@ $desktop: 1440px;
     background-color: $bg-page;
     padding: 1.5rem;
 
+    .loading-box {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.25rem 1.75rem;
+        background-color: $bg-card;
+        border: 1px solid $border-color;
+        border-radius: $radius;
+    }
+
+    .spinner {
+        color: $accent;
+        animation: spin 1s linear infinite;
+    }
+
     h1 {
-        font-size: clamp(1.1rem, 3vw, 1.5rem);
-        color: $text-muted;
-        text-align: center;
-    }
-}
-
-// ── Logout Button (Interview Nav) ─────────────────────────────────────────────
-.logout-btn--nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.45rem;
-    width: 100%;
-    padding: 0.6rem 1rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    font-family: inherit;
-    color: $text-muted;
-    background: transparent;
-    border: 1px solid $border-color;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
-    margin-top: 0.5rem;
-
-    svg {
-        flex-shrink: 0;
-        transition: transform 0.2s;
-    }
-
-    &:hover {
-        color: #ff6b78;
-        border-color: rgba(220, 53, 69, 0.45);
-        background: rgba(220, 53, 69, 0.07);
-
-        svg {
-            transform: translateX(2px);
-        }
-    }
-
-    &:active {
-        transform: scale(0.97);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: $text-primary;
+        margin: 0;
     }
 }
