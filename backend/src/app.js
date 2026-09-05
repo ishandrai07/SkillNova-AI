@@ -20,4 +20,13 @@ const interviewRouter = require("./routes/interview.routes")
 app.use("/api/auth", authRouter)
 app.use("/api/interview", interviewRouter)
 
+// Global error handler — must have 4 params so Express treats it as error middleware
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+    console.error("Unhandled error:", err)
+    res.status(err.status || 500).json({
+        message: err.message || "Internal server error"
+    })
+})
+
 module.exports = app
