@@ -4,11 +4,35 @@ const cors = require("cors")
 
 const app = express()
 
+app.set("trust proxy", 1)
+
 app.use(express.json())
 app.use(cookieParser())
+
+const clientUrl = process.env.CLIENT_URL
+const allowedOrigins = [
+    clientUrl,
+    clientUrl ? clientUrl.replace(/\/$/, "") : null,
+    "http://localhost:5173",
+    "http://localhost:3000"
+].filter(Boolean)
+
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
-    credentials: true
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true)
+        if (
+            allowedOrigins.length === 0 ||
+            allowedOrigins.includes(origin) ||
+            allowedOrigins.includes(origin.replace(/\/$/, "")) ||
+            origin.endsWith(".vercel.app")
+        ) {
+            return callback(null, true)
+        }
+        return callback(null, true)
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"]
 }))
 
 // require all the routes here

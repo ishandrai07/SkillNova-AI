@@ -15,6 +15,9 @@ export const useAuth = ()=> {
 
         try{
             const data = await login({email, password})
+            if(data?.token) {
+                localStorage.setItem("token", data.token)
+            }
             if(data?.user) {
                 setuser(data.user)
                 return { success: true }
@@ -35,6 +38,9 @@ export const useAuth = ()=> {
         setloading(true)
         try{
             const data = await register({username, email, password})
+            if(data?.token) {
+                localStorage.setItem("token", data.token)
+            }
             if(data?.user) {
                 setuser(data.user)
                 return { success: true }
@@ -55,35 +61,46 @@ export const useAuth = ()=> {
         setloading(true)
         try{
             await logout()
-            setuser(null)
-            navigate("/login")
         }
         catch(err){
             console.error("Logout error:", err)
         }
         finally{
+            localStorage.removeItem("token")
+            setuser(null)
             setloading(false)
+            navigate("/login")
         }
     }
 
     useEffect(() => {
+      let isMounted = true
+
       const getAndSetUser = async ()=> {
         try{
             const data = await getMe()
-            if(data?.user) {
+            if(isMounted && data?.user) {
                 setuser(data.user)
             }
         }
         catch(err){
-            // No token / unauthorized — normal on fresh start
+            if (isMounted) {
+                localStorage.removeItem("token")
+                setuser(null)
+            }
         }
         finally{
-            setloading(false)
+            if (isMounted) {
+                setloading(false)
+            }
         }
       }
 
       getAndSetUser()
 
+      return () => {
+        isMounted = false
+      }
     }, [])
 
     return {user, loading, handleRegister, handleLogin, handleLogout}

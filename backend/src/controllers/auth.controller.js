@@ -53,6 +53,7 @@ async function registerUserController(req, res) {
 
         res.status(201).json({
             message: "User registered successfully",
+            token,
             user: {
                 id: user._id,
                 username: user.username,
@@ -106,6 +107,7 @@ async function loginUserController(req, res) {
         })
         res.status(200).json({
             message: "user loggedin successfully",
+            token,
             user: {
                 id: user._id,
                 username: user.username,
@@ -125,13 +127,21 @@ async function loginUserController(req, res) {
  */
 async function logoutUserController(req, res) {
     try {
-        const token = req.cookies.token
+        let token = req.cookies?.token
+        if (!token && req.headers.authorization) {
+            const authHeader = req.headers.authorization
+            token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader
+        }
 
         if (token) {
             await tokenBlackListModel.create({ token })
         }
 
-        res.clearCookie("token")
+        res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true
+        })
 
         res.status(200).json({
             message: "user logged out successfully"
